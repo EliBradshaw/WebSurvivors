@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "run",
+			"path": "websocket-server",
+			"problemMatcher": [],
+			"label": "Run Web Survivors Server",
+			"detail": "./run"
+		}
+	]
+}
