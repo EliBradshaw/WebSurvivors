@@ -1,7 +1,7 @@
 export default class Caller {
     /** @type {Caller[]} */
     static _registeredCalls = [];
-    static DEBUG = false;
+    static DEBUG = true;
     static registerCall(apiCall) {
         Caller._registeredCalls.push(apiCall);
         if (Caller.DEBUG)

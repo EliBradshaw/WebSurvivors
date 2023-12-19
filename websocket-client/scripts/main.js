@@ -148,6 +148,17 @@ class Background extends ScreenThing {
 class ChatBox extends ScreenThing {
     constructor() {
         super("chatbox");
+        this.messages = document.createElement("div");
+        this.input = document.createElement("input");
+        this.input.onchange = e => {
+            let message = `<${USERNAME}> ${this.input.value}\n`;
+            this.input.value = "";
+            callServer("chatMessage", message).then(msgs => {
+                this.messages.innerText = msgs.split("\\n").join("\n");
+            });
+        };
+        this.html.appendChild(this.messages);
+        this.html.appendChild(this.input);
     }
 
     camCoords() {
@@ -155,10 +166,32 @@ class ChatBox extends ScreenThing {
     }
 }
 
+function getCookieOrSet(name, setter) {
+    let value = localStorage.getItem(name);
+    if (value)
+        return value;
+    value = setter();
+    localStorage.setItem(name, value);
+    return value;
+}
+
+function serverUpdateLoop() {
+    let before = performance.now();
+    callServer("proQuo").then(res => {
+        res = JSON.parse(res);
+        let after = performance.now();
+        let ping = Math.round(after - before);
+        chatbox.messages.innerText = `Ping: ${ping}\n${res.messages?.split("\\n").join("\n")}`;
+        setTimeout(serverUpdateLoop, 0);
+    });
+} serverUpdateLoop();
 
 const TARGET_FPS = 60;
 const TARGET_MS = 1000/TARGET_FPS;
 const CAMERA_SPEED = 0.1;
+const USERNAME = getCookieOrSet("name", _ => prompt("Please enter your username"));
+let ID; 
+callServer("playerJoin", USERNAME).then(id => ID = id);
 
 let timing = TARGET_MS;
 let fade = 0.1;

@@ -24,10 +24,11 @@ app.get('/*', (req, res) => {
   const path = fullPath.split('?')[0]; // Extracting the route without query params
   const args = req.query; // Accessing the query parameters
 
-  let response = API.receive(path, Object.keys(args));
-  
-  res.send(response);
+  let responseData = API.receive(path, API.decodeArgs(Object.keys(args)));
+
+  res.send(responseData);
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
