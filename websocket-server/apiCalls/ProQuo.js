@@ -1,4 +1,5 @@
 import ChatHandler from "../ChatHandler.js";
+import PlayerHandler from "../PlayerHandler.js";
 import Caller from "./Caller.js";
 
 export default class ProQuo extends Caller {
@@ -7,8 +8,12 @@ export default class ProQuo extends Caller {
     }
 
     onCall(data) {
+        let client = data[0];
+        let serv = PlayerHandler.getPlayer(client.id);
+        serv.position.take(client.position)
         return {
-            messages: ChatHandler.messages
+            messages: ChatHandler.messages,
+            players: PlayerHandler.players
         };
     }
 }
