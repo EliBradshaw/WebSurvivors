@@ -19,7 +19,7 @@ export default class PlayerHandler {
         let rplayer = null;
         let unremPlayers = [];
         for (let player of PlayerHandler.players) {
-            if (player.id !== id) 
+            if (player.id != id) 
                 unremPlayers.push(player);
             else
                 rplayer = player;
