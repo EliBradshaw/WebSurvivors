@@ -9,8 +9,10 @@ export default class ProQuo extends Caller {
 
     onCall(data) {
         let client = data[0];
-        let serv = PlayerHandler.getPlayer(client.id);
-        serv.position.take(client.position)
+        if (client) {
+            let serv = PlayerHandler.getPlayer(client.id);
+            serv.position.take(client.position)
+        }
         return {
             messages: ChatHandler.messages,
             players: PlayerHandler.players

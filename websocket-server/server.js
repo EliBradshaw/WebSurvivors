@@ -31,5 +31,5 @@ app.get('/*', (req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}.\n\nClient: http://127.0.0.1:8080`);
 });

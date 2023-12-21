@@ -73,7 +73,8 @@ class ScreenThing extends Thing {
         this.html = document.createElement("div");
         this.html.classList.add(className);
         document.getElementById("canvas").appendChild(this.html);
-        hookTask(_=>this._tick());
+        this.localTask = _=>this._tick();
+        hookTask(this.localTask);
     }
 
     _tick() {
@@ -93,6 +94,11 @@ class ScreenThing extends Thing {
         let camPos = this.camCoords();
         this.html.style.left = camPos.x + "px";
         this.html.style.top = camPos.y + "px";
+    }
+
+    remove() {
+        tasks = tasks.filter(a=> a != this.localTask);
+        this.html.remove();
     }
 }
 
@@ -250,26 +256,38 @@ function gameTick() {
         task();
 }
 
-function inspectPlayers(plrs, ping) {
-    let plrMap = {};
-    for (let player of players)
-        plrMap[player.id] = player;
+function inspectPlayers(serPlrs, ping) {
+    let cliPlrMap = {};
+    let serPlrMap = {};
+    for (let cliPlr of players)
+        cliPlrMap[cliPlr.id] = cliPlr;
 
-    for (let player of plrs) {
-        if (plrMap[player.id]) {
-            if (player.id == ID)
+    for (let serPlr of serPlrs) {
+        serPlrMap[serPlr.id] = true;
+        if (cliPlrMap[serPlr.id]) {
+            if (serPlr.id == ID)
                 continue;
-            let client = plrMap[player.id];
+            let client = cliPlrMap[serPlr.id];
             client.offPutting.scale(0);
-            client.offPuttingVel.scale(0).sub(client.position.subbed(player.position));
+            client.offPuttingVel.scale(0).sub(client.position.subbed(serPlr.position));
             client.offPuttingVel.normalize();
-            client.position.take(player.position);
+            client.position.take(serPlr.position);
             continue;
         }
-        players.push(new PlayerClient(player.name, player.id));
-        console.log("Adding new player '" + player.name + "' with id " + player.id);
+        players.push(new PlayerClient(serPlr.name, serPlr.id));
+        console.log("Adding new player '" + serPlr.name + "' with id " + serPlr.id);
         console.log(players);
     }
+    for (let cliPlr of players) {
+        if (!serPlrMap[cliPlr.id]) {
+            cliPlr.remove();
+            console.log("Removing player");
+        }
+    }
+}
+
+window.onbeforeunload = e => {
+    callServer("playerLeave", ID);
 }
 
 let background = new Background()

@@ -1,6 +1,7 @@
 import Caller from "./apiCalls/Caller.js";
 import ChatMessage from "./apiCalls/ChatMessage.js";
 import PlayerJoin from "./apiCalls/PlayerJoin.js";
+import PlayerLeave from "./apiCalls/PlayerLeave.js";
 import ProQuo from "./apiCalls/ProQuo.js";
 import Fuzz from "./apiCalls/fuzz.js";
 
@@ -10,6 +11,7 @@ export default class API {
         Caller.registerCall(new ChatMessage());
         Caller.registerCall(new ProQuo());
         Caller.registerCall(new PlayerJoin());
+        Caller.registerCall(new PlayerLeave())
     }
     static encodeArgs(args) {
         return args.map(JSON.stringify).map(str => btoa(str));

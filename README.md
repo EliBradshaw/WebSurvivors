@@ -4,8 +4,13 @@ Have you ever played, or seen someone else playing a game like Vampire Survivors
 
 Well, look no further than this repo, I am slowly working towards making a fun and entertaining game lie Vampire Survivors you can play in your browser with your friends.
 # How to run the server
+First go into the server and make sure the node modules are installed:
 ```bash
 cd websocket-server
+npm install
+```
+Then, run the server with:
+```bash
 ./run
 ```
 # Connect locally with browser once the server is running
