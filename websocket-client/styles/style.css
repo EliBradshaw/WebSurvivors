@@ -5,14 +5,34 @@ body {
 .player, .enemy {
     position: fixed;
     width: 50px;
-    height: 50px;
-    background-color: red;
+    height: 70px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    image-rendering: pixelated;
+}
+
+.enemy {
+    background-image: url('../images/zombie.png');
+}
+
+.player {
+    background-image: url('../images/man.png');
+    background-position: center;
+    background-size: 100%;
+}
+
+.player > div {
+    position: absolute;
+    left: 50%;
+    top: -10px; /* Adjust as needed */
+    transform: translateX(-50%);
+    /* Other styling for the username indicator */
 }
 
 .background {
     position: fixed;
-    width: 100vw;
-    height: 100vh;
+    width: 110vw;
+    height: 110vh;
     background-image: url('../images/RickIcon.jpg');
     background-repeat: repeat;
 }
@@ -26,6 +46,18 @@ body {
     border: 3px solid black;
     background-color: gray;
 }
+
+.chatbox-messages {
+    display: flex;
+    flex-flow: column-reverse wrap; /* Reverse the order of messages */
+    position: absolute;
+    bottom: 30px;
+    overflow-y: hidden;
+    width: 100%;
+    max-height: 85%;
+    height: min-content;
+}
+
 
 .chatbox > input {
     position: absolute;
