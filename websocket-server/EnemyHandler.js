@@ -10,4 +10,8 @@ export default class EnemyHandler {
                 unremEnemies.push(enemy);
         EnemyHandler.enemies = unremEnemies;
     }
+
+    spawnEnemy() {
+        
+    }
 }

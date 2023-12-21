@@ -10,9 +10,10 @@ export default class PlayerJoin extends Caller {
 
     onCall(data) {
         ChatHandler.messages += data + " has joined the game!\n";
-        console.log(data + " has joined the game!\n");
+        console.log(data + " has joined the game!");
         let player = new Player(data);
         PlayerHandler.addPlayer(player);
+        console.log("Player count: " + PlayerHandler.players.length);
         return player.id+"";
     }
 }

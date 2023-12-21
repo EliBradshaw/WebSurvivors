@@ -11,8 +11,10 @@ export default class PlayerLeave extends Caller {
     onCall(data) {
         let id = data[0];
         let player = PlayerHandler.getPlayer(id);
+        if (!player)
+            return "";
         ChatHandler.messages += player.name + " has left the game!\n";
-        console.log(player.name + " has left the game!\n");
+        console.log(player.name + " has left the game!");
         PlayerHandler.removePlayer(id);
         console.log("Player count: " + PlayerHandler.players.length);
         return "";

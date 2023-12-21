@@ -1,10 +1,12 @@
+import EnemyStats from "./EnemyStats.js";
 import Vector from "./Vector.js";
 
 export default class Enemy {
-    constructor(name, id = Math.random()) {
+    constructor(name, stats = new EnemyStats(), id = Math.random()) {
         this.name = name;
         this.position = new Vector();
         this.id = id;
-        this.stats = new EnemyStats();
+        this.stats = stats;
+        this.health = this.stats.health;
     }
 }
