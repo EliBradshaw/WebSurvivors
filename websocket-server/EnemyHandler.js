@@ -1,4 +1,8 @@
+import PlayerHandler from "./PlayerHandler.js";
+import Enemy from "./library/Enemy.js";
+
 export default class EnemyHandler {
+    /** @type {Enemy[]} */
     static enemies = [];
     static addEnemy(enemy) {
         EnemyHandler.enemies.push(enemy);
@@ -11,7 +15,14 @@ export default class EnemyHandler {
         EnemyHandler.enemies = unremEnemies;
     }
 
-    spawnEnemy() {
-        
+    static spawn() {
+        let enemy = new Enemy();
+        EnemyHandler.addEnemy(enemy);
+    }
+
+    static tick() {
+        for (let enemy of EnemyHandler.enemies) {
+            let point = PlayerHandler.targetPoint(enemy.position);
+        }
     }
 }

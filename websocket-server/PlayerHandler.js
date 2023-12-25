@@ -27,4 +27,9 @@ export default class PlayerHandler {
         PlayerHandler.players = unremPlayers;
         return rplayer;
     }
+
+    /** @type {function(Vector): Vector} */
+    static targetPoint(vec) {
+        
+    }
 }

@@ -2,6 +2,7 @@ import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import API from './API.js';
+import EnemyHandler from './EnemyHandler.js';
 
 const PORT = process.env.PORT || 8080;
 
@@ -45,7 +46,9 @@ function gameLoop() {
 } gameLoop();
 
 function gameTick() {
-
+	if (Math.random() < 1/100) {
+		EnemyHandler.spawn();
+	}
 }
 
 app.listen(PORT, () => {
