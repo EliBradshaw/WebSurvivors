@@ -26,7 +26,8 @@ function serverUpdateLoop() {
         chatbox.ping.innerText = `Ping: ${ping}`;
         chatbox.messages.innerText = `${res.messages?.split("\\n").join("\n")}`;
         inspectPlayers(res.players);
-        // inspectEnemies(res.enemies);
+        inspectEnemies(res.enemies);
+        console.log(res.enemies, enemies)
         setTimeout(serverUpdateLoop, 0);
     });
 }
@@ -97,7 +98,7 @@ function inspectEnemies(serEnemies) {
             client.position.take(serEnemy.position);
             continue;
         }
-        enemies.push(new EnemyClient(serEnemy.name, serEnemy.id));
+        enemies.push(new EnemyClient(serEnemy.id));
     }
     for (let cliEnemy of enemies) {
         if (!serEnemyMap[cliEnemy.id]) {

@@ -2,8 +2,9 @@ import SThing from "./SThing.js";
 import Vector from "./Vector.js";
 
 export default class EnemyClient extends SThing {
-    constructor() {
+    constructor(id = -1) {
         super("enemy");
+        this.id = id;
         this.offPutting = new Vector();
         this.offPuttingVel = new Vector();
     }
