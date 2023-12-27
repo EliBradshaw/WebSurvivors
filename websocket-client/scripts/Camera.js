@@ -1,5 +1,5 @@
-import SThing from "./SThing.js";
 import SThingHandler from "./SThingHandler.js";
+import SThing from "./Sthing.js";
 import Thing from "./Thing.js";
 
 export default class Camera extends SThing {

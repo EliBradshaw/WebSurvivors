@@ -1,6 +1,5 @@
 import Thing from "./Thing.js";
-import SThing from "./SThing.js";
-import Background from "./Backgroud.js";
+import Background from "./Background.js";
 import Camera from "./Camera.js";
 import ChatBox from "./ChatBox.js";
 import PlayerClient from "./PlayerClient.js";
@@ -27,7 +26,6 @@ function serverUpdateLoop() {
         chatbox.messages.innerText = `${res.messages?.split("\\n").join("\n")}`;
         inspectPlayers(res.players);
         inspectEnemies(res.enemies);
-        console.log(res.enemies, enemies)
         setTimeout(serverUpdateLoop, 0);
     });
 }
@@ -89,7 +87,7 @@ function inspectEnemies(serEnemies) {
         cliEnemyMap[cliEnemy.id] = cliEnemy;
 
     for (let serEnemy of serEnemies) {
-        serEnemyMap[serEnemy.id] = true;
+        serEnemyMap[serEnemy.id] = serEnemy;
         if (cliEnemyMap[serEnemy.id]) {
             let client = cliEnemyMap[serEnemy.id];
             client.offPutting.scale(0);

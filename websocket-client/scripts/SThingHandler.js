@@ -1,4 +1,4 @@
-import SThing from "./SThing.js";
+import SThing from "./Sthing.js";
 export default class SThingHandler {
     /** @type {SThing[]} */
     static things = [];

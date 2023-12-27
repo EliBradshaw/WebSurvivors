@@ -1,4 +1,4 @@
-import SThing from "./SThing.js";
+import SThing from "./Sthing.js";
 import Vector from "./Vector.js";
 
 export default class EnemyClient extends SThing {

@@ -1,5 +1,5 @@
-import SThing from "./SThing.js";
 import SThingHandler from "./SThingHandler.js";
+import SThing from "./Sthing.js";
 import Vector from "./Vector.js";
 
 export default class PlayerClient extends SThing {
