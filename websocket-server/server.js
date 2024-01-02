@@ -47,7 +47,7 @@ function gameLoop() {
 
 function gameTick() {
 	EnemyHandler.tick();
-	if (Math.random() < 1/100) {
+	if (Math.random() < 1/10) {
 		EnemyHandler.spawn();
 	}
 }

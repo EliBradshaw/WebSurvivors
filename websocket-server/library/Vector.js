@@ -1,4 +1,11 @@
 export default class Vector {
+    static random() {
+        return new Vector(
+            Math.random() - 0.5,
+            Math.random() - 0.5
+        ).normalize();
+    }
+
     constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
