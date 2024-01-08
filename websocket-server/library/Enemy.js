@@ -1,4 +1,5 @@
 import EnemyHandler from "../EnemyHandler.js";
+import HandlerHandler from "../HandlerHandler.js";
 import EnemyStats from "./EnemyStats.js";
 import Vector from "./Vector.js";
 
@@ -16,7 +17,7 @@ export default class Enemy {
     merge(e2) {
         if (this.stack != e2.stack || this.stack >= 5)
             return;
-        EnemyHandler.removeEnemy(e2.id);
+        HandlerHandler.get("enemy").removeEnemy(e2.id);
         this.stack += e2.stack;
     }
 }

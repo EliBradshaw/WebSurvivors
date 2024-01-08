@@ -1,43 +1,51 @@
+import Handler from "./Handler.js";
 import Player from "./library/Player.js";
 import Vector from "./library/Vector.js";
 
-export default class PlayerHandler {
-    /** @type {Player[]} */
-    static players = [];
-    /** @type {Map<number, Player>} */
-    static playerMap = {};
+export default class PlayerHandler extends Handler {
+    constructor() {
+        super("player");
+        /** @type {Player[]} */
+        this.players = [];
+        /** @type {Map<number, Player>} */
+        this.playerMap = {};
+    }
     /** @type {function(Player)} */
-    static addPlayer(player) {
-        PlayerHandler.players.push(player);
-        PlayerHandler.playerMap[player.id] = player;
+    addPlayer(player) {
+        this.players.push(player);
+        this.playerMap[player.id] = player;
     }
     /** @type {function(number): Player} */
-    static getPlayer(id) {
-        return PlayerHandler.playerMap[id];
+    getPlayer(id) {
+        return this.playerMap[id];
     }
     /** @type {function(number): Player} */
-    static removePlayer(id) {
+    removePlayer(id) {
         let rplayer = null;
         let unremPlayers = [];
-        for (let player of PlayerHandler.players) {
+        for (let player of this.players) {
             if (player.id != id) 
                 unremPlayers.push(player);
             else
                 rplayer = player;
         }
-        PlayerHandler.players = unremPlayers;
+        this.players = unremPlayers;
         return rplayer;
     }
 
+    randomPlayer() {
+        return this.players[Math.floor(this.players.length * Math.random())];
+    }
+
     /** @type {function(Vector): Vector} */
-    static targetPoint(vec) {
-        return PlayerHandler.players[0]?.position;
+    targetPoint(vec) {
+        return this.players[0]?.position;
         let point = new Vector();
         let totalWeight = 0;
         let weightedSum = new Vector();
 
         // Assuming there's an 'enemy' variable representing the enemy position
-        for (let player of PlayerHandler.players) {
+        for (let player of this.players) {
             let distanceToEnemy = player.position.sub(vec).length(); // Calculate distance to the enemy
 
             // The closer the player is to the enemy, the higher the weight

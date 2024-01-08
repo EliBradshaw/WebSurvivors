@@ -1,4 +1,4 @@
-import ChatHandler from "../ChatHandler.js";
+import HandlerHandler from "../HandlerHandler.js";
 import Caller from "./Caller.js";
 
 export default class ChatMessage extends Caller {
@@ -7,7 +7,8 @@ export default class ChatMessage extends Caller {
     }
 
     onCall(data) {
-        ChatHandler.messages += data;
-        return ChatHandler.messages;
+        const ch = HandlerHandler.get("chat");
+        ch.messages += data;
+        return ch.messages;
     }
 }

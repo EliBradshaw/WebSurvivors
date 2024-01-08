@@ -2,6 +2,7 @@ import Player from "../library/Player.js";
 import ChatHandler from "../ChatHandler.js";
 import PlayerHandler from "../PlayerHandler.js";
 import Caller from "./Caller.js";
+import HandlerHandler from "../HandlerHandler.js";
 
 export default class PlayerLeave extends Caller {
     constructor() {
@@ -10,13 +11,14 @@ export default class PlayerLeave extends Caller {
 
     onCall(data) {
         let id = data[0];
-        let player = PlayerHandler.getPlayer(id);
+        const [ch, ph] = HandlerHandler.get("chat", "player");
+        let player = ph.getPlayer(id);
         if (!player)
             return "";
-        ChatHandler.messages += player.name + " has left the game!\n";
+        ch.messages += player.name + " has left the game!\n";
         console.log(player.name + " has left the game!");
-        PlayerHandler.removePlayer(id);
-        console.log("Player count: " + PlayerHandler.players.length);
+        ph.removePlayer(id);
+        console.log("Player count: " + ph.players.length);
         return "";
     }
 }

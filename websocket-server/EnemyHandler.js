@@ -1,52 +1,60 @@
+import Handler from "./Handler.js";
+import HandlerHandler from "./HandlerHandler.js";
 import PlayerHandler from "./PlayerHandler.js";
 import Enemy from "./library/Enemy.js";
 import Vector from "./library/Vector.js";
 
-export default class EnemyHandler {
-    /** @type {Enemy[]} */
-    static enemies = [];
-    static change = 0;
-    static cap = 1000;
-    static addEnemy(enemy) {
-        EnemyHandler.enemies.push(enemy);
+export default class EnemyHandler extends Handler{
+    constructor() {
+        super("enemy");
+        /** @type {Enemy[]} */
+        this.enemies = [];
+        this.change = 0;
+        this.cap = 1000;
     }
-    static removeEnemy(id) {
+    addEnemy(enemy) {
+        this.enemies.push(enemy);
+    }
+    removeEnemy(id) {
         let unremEnemies = [];
-        for (let enemy of EnemyHandler.enemies)
+        for (let enemy of this.enemies)
             if (enemy.id !== id)
                 unremEnemies.push(enemy);
-        EnemyHandler.enemies = unremEnemies;
+        this.enemies = unremEnemies;
     }
 
-    static count() {
+    count() {
         let out = 0;
-        for (let enemy of EnemyHandler.enemies)
+        for (let enemy of this.enemies)
             out += 1 + enemy.stack;
         return out;
     }
 
-    static spawn() {
-        if (EnemyHandler.count() >= EnemyHandler.cap)
+    spawn() {
+        if (this.count() >= this.cap)
             return;
         let enemy = new Enemy();
-        let player = PlayerHandler.players[
-            Math.floor(Math.random() * PlayerHandler.players.length)
-        ];
+        const ph = HandlerHandler.get("player");
+        let player = ph.randomPlayer();
         if (!player)
             return;
         enemy.position.take(player.position.added(Vector.random().scale(500)))
-        EnemyHandler.addEnemy(enemy);
+        this.addEnemy(enemy);
     }
 
-    static tick() {
-        for (let enemy of EnemyHandler.enemies) {
-            let point = PlayerHandler.targetPoint(enemy.position);
+    tick() {
+        if (Math.random() < 1/10) {
+            this.spawn();
+        }
+        const ph = HandlerHandler.get("player");
+        for (let enemy of this.enemies) {
+            let point = ph.targetPoint(enemy.position);
             if (!point)
                 return;
             let dir = point.subbed(enemy.position);
             enemy.flip = (dir.x > -10)
             dir.normalize();
-            for (let i = EnemyHandler.change % 10; i < this.enemies.length; i+=10) {
+            for (let i = this.change % 10; i < this.enemies.length; i+=10) {
                 let enemy2 = this.enemies[i];
                 if (!enemy2 || enemy2 == enemy)
                     continue;
@@ -62,6 +70,6 @@ export default class EnemyHandler {
             let vel = dir.scale(enemy.stats.speed);
             enemy.position.add(vel);
         }
-        EnemyHandler.change++;
+        this.change++;
     }
 }

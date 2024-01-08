@@ -3,10 +3,11 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import API from './API.js';
 import EnemyHandler from './EnemyHandler.js';
+import HandlerHandler from './HandlerHandler.js';
 
 const PORT = process.env.PORT || 8080;
 
-API.registerCalls();
+HandlerHandler.registeredHandlers();
 
 const app = express();
 
@@ -25,7 +26,8 @@ app.get('/*', (req, res) => {
 	const path = fullPath.split('?')[0]; // Extracting the route without query params
 	const args = req.query; // Accessing the query parameters
 
-	let responseData = API.receive(path, API.decodeArgs(Object.keys(args)));
+	const api = HandlerHandler.get("api");
+	let responseData = api.receive(path, api.decodeArgs(Object.keys(args)));
 
 	res.send(responseData);
 });
@@ -39,17 +41,14 @@ function gameLoop() {
 	let before = performance.now();
 	gameTick();
 	let after = performance.now();
-  let delta = after - before;
+    let delta = after - before;
 	let diff = TARGET_MS - delta;
 	timing = timing * (1 - fade) + diff * fade;
 	setTimeout(gameLoop, timing);
 } gameLoop();
 
 function gameTick() {
-	EnemyHandler.tick();
-	if (Math.random() < 1/10) {
-		EnemyHandler.spawn();
-	}
+	HandlerHandler.tick();
 }
 
 app.listen(PORT, () => {
