@@ -11,7 +11,7 @@ export default class ProQuo extends Caller {
 
     onCall(data) {
         let client = data[0];
-        const [eh, ch, ph] = HandlerHandler.get("enemy", "chat", "player");
+        const [eh, ch, ph, coh] = HandlerHandler.get("enemy", "chat", "player", "collision");
         if (client) {
             let serv = ph.getPlayer(client.id);
             serv.position.take(client.position);
@@ -19,7 +19,8 @@ export default class ProQuo extends Caller {
         return {
             messages: ch.messages,
             players: ph.players,
-            enemies: eh.enemies
+            enemies: eh.enemies,
+            rects: coh.rects,
         };
     }
 }

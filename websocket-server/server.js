@@ -1,9 +1,9 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import API from './API.js';
-import EnemyHandler from './EnemyHandler.js';
 import HandlerHandler from './HandlerHandler.js';
+import CollisionRect from './library/CollisionRect.js';
+import Vector from './library/Vector.js';
 
 const PORT = process.env.PORT || 8080;
 
@@ -36,6 +36,13 @@ const TARGET_FPS = 60;
 const TARGET_MS = 1000 / TARGET_FPS;
 let timing = TARGET_MS;
 let fade = 0.1;
+
+HandlerHandler.get("collision").addRect(
+	new CollisionRect(
+		new Vector(250, 600),
+		new Vector(500, 50),
+	)
+)
 
 function gameLoop() {
 	let before = performance.now();

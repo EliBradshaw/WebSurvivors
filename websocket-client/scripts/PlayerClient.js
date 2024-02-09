@@ -3,30 +3,58 @@ import SThing from "./Sthing.js";
 import Vector from "./Vector.js";
 
 export default class PlayerClient extends SThing {
-    constructor(playerName, id = -1, isMain = false) {
+    constructor(serPlr, isMain = false) {
         super("player", isMain?"main":"");
-        this.id = id;
-        this.html.id = `player-${playerName}`;
+        this.serPlr = serPlr;
+        this.isMain = isMain;
+        this.id = serPlr.id;
+        this.html.id = `player-${serPlr.name}`;
         this.usernameHTML = document.createElement("div");
-        this.usernameHTML.innerText = playerName;
+        this.usernameHTML.innerText = serPlr.name;
         this.html.appendChild(this.usernameHTML);
+        this.position.x += 500;
+        this.position.y += 500;
         this.velocity = new Vector();
         this.offPutting = new Vector();
         this.offPuttingVel = new Vector();
     }
 
     main() {
-        this.velocity.scale(0);
+        this.velocity.x = 0;
         if (heldKeys["a"])
             this.velocity.x -= 1;
         if (heldKeys["d"])
             this.velocity.x += 1;
-        if (heldKeys["w"])
-            this.velocity.y -= 1;
-        if (heldKeys["s"])
-            this.velocity.y += 1;
-        this.velocity.normalize();
-        this.position.add(this.velocity);
+        if (heldKeys[" "] && this.velocity.y == 0)
+            this.velocity.y -= this.serPlr.stats?.baseJump || 1;
+        else if (!heldKeys[" "] && this.velocity.y < 0)
+            this.velocity.y += 0.1;
+        this.velocity.x *= this.serPlr.stats?.baseSpeed || 1;
+        this.velocity.y += 0.1;
+        let cpy = this.position.scaled(1);
+        this.position.x += this.velocity.x;
+        if (this.checkCols()) {
+            this.position.x -= this.velocity.x;
+            this.velocity.x = 0;
+        }
+        this.position.y += this.velocity.y
+        if (this.checkCols())
+            this.velocity.y = 0;
+        this.position.take(cpy);
+    }
+
+    checkCols() {
+        for (let rect of SThingHandler.get("rects")) {
+            let collided = rect.isColliding({
+                position: this.position,
+                rect: this.dimensions
+            });
+            if (collided) {
+                this.position.sub(this.velocity);
+                return true;
+            }
+        }
+        return false;
     }
 
     off() {
@@ -34,7 +62,7 @@ export default class PlayerClient extends SThing {
     }
 
     tick() {
-        if (this == SThingHandler.get("main"))
+        if (this.isMain)
             this.main();
         else
             this.off();
@@ -45,6 +73,6 @@ export default class PlayerClient extends SThing {
         let center = new Vector(window.innerWidth/2, window.innerHeight/2);
         center.add(this.offPutting);
         center.sub(this.dimensions.scaled(0.5)).add(this.position).sub(SThingHandler.get("cmr").position);
-        return center;
+        return center.sub(new Vector(30, 4));
     }
 }

@@ -3,7 +3,7 @@ export default class Handler {
     static _registeredHandlers = [];
     static _handlerMap = {};
     static DEBUG = true;
-    static registeredHandler(handler) {
+    static registerHandler(handler) {
         Handler._registeredHandlers.push(handler);
         Handler._handlerMap[handler.name] = handler;
         if (Handler.DEBUG)

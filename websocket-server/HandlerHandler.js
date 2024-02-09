@@ -1,17 +1,22 @@
 import API from "./API.js";
 import ChatHandler from "./ChatHandler.js";
+import CollisionHandler from "./CollisionHandler.js";
 import EnemyHandler from "./EnemyHandler.js";
 import Handler from "./Handler.js";
 import PlayerHandler from "./PlayerHandler.js";
 
+// THE HAND HAND ITSELF!
+
 export default class HandlerHandler { // Yes. I named this.
     static registeredHandlers() {
-        Handler.registeredHandler(new EnemyHandler());
-        Handler.registeredHandler(new API());
-        Handler.registeredHandler(new PlayerHandler());
-        Handler.registeredHandler(new ChatHandler());
+        Handler.registerHandler(new EnemyHandler());
+        Handler.registerHandler(new API());
+        Handler.registerHandler(new PlayerHandler());
+        Handler.registerHandler(new ChatHandler());
+        Handler.registerHandler(new CollisionHandler());
     }
     
+    /** @type {function(...string): Handler|Handler[]} */
     static get(...names) {
         if (names.length == 1)
             return Handler._handlerMap[names[0]];

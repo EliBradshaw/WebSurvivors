@@ -1,7 +1,10 @@
 export default class PlayerStats {
     static DEFAULTS = {
-        BASE_SPEED: 1,
+        BASE_SPEED: 3,
         SPEED_PERC_UP: 0,
+
+        BASE_JUMP: 5,
+        JUMP_PERC_UP: 0,
 
         BASE_ATK_SPEED: 1,
         ATK_SPEED_PERC_UP: 0,
@@ -13,6 +16,9 @@ export default class PlayerStats {
     constructor() {
         this.baseSpeed = PlayerStats.DEFAULTS.BASE_SPEED;
         this.speedPercUp = PlayerStats.DEFAULTS.SPEED_PERC_UP;
+
+        this.baseJump = PlayerStats.DEFAULTS.BASE_JUMP;
+        this.jumpPercUp = PlayerStats.DEFAULTS.JUMP_PERC_UP;
 
         this.baseAtkSpeed = PlayerStats.DEFAULTS.BASE_ATK_SPEED;
         this.atkSpeedPercUp = PlayerStats.DEFAULTS.ATK_SPEED_PERC_UP;

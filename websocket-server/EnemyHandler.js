@@ -4,7 +4,7 @@ import PlayerHandler from "./PlayerHandler.js";
 import Enemy from "./library/Enemy.js";
 import Vector from "./library/Vector.js";
 
-export default class EnemyHandler extends Handler{
+export default class EnemyHandler extends Handler {
     constructor() {
         super("enemy");
         /** @type {Enemy[]} */
@@ -38,11 +38,12 @@ export default class EnemyHandler extends Handler{
         let player = ph.randomPlayer();
         if (!player)
             return;
-        enemy.position.take(player.position.added(Vector.random().scale(500)))
+        enemy.position.take(player.position.added(Vector.random().scale(500)));
         this.addEnemy(enemy);
     }
 
     tick() {
+        return;
         if (Math.random() < 1/10) {
             this.spawn();
         }
@@ -52,7 +53,7 @@ export default class EnemyHandler extends Handler{
             if (!point)
                 return;
             let dir = point.subbed(enemy.position);
-            enemy.flip = (dir.x > -10)
+            enemy.flip = (dir.x > -10);
             dir.normalize();
             for (let i = this.change % 10; i < this.enemies.length; i+=10) {
                 let enemy2 = this.enemies[i];

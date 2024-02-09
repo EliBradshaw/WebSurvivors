@@ -21,6 +21,10 @@ body {
     background-size: 100%;
 }
 
+.rect {
+    background-color: red;
+}
+
 .player > div {
     position: absolute;
     left: 50%;

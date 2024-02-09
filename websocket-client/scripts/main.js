@@ -1,4 +1,3 @@
-import Thing from "./Thing.js";
 import Background from "./Background.js";
 import Camera from "./Camera.js";
 import ChatBox from "./ChatBox.js";
@@ -6,6 +5,7 @@ import PlayerClient from "./PlayerClient.js";
 import SThingHandler from "./SThingHandler.js";
 import Server from "./Server.js";
 import EnemyClient from "./EnemyClient.js";
+import Rect from "./Rect.js";
 
 function getCookieOrSet(name, setter) {
     let value = localStorage.getItem(name);
@@ -24,6 +24,7 @@ function serverUpdateLoop() {
         let ping = Math.round(after - before);
         chatbox.ping.innerText = `Ping: ${ping}`;
         chatbox.messages.innerText = `${res.messages?.split("\\n").join("\n")}`;
+        inspectRects(res.rects);
         inspectPlayers(res.players);
         inspectEnemies(res.enemies);
         setTimeout(serverUpdateLoop, 0);
@@ -62,16 +63,18 @@ function inspectPlayers(serPlrs) {
     for (let serPlr of serPlrs) {
         serPlrMap[serPlr.id] = true;
         if (cliPlrMap[serPlr.id]) {
-            if (serPlr.id == Server.ID)
-                continue;
             let client = cliPlrMap[serPlr.id];
+            client.dimensions.take(serPlr.size);
+            client.serPlr = serPlr;
+            if (serPlr.id == Server.ID || serPlr.isMain)
+                continue;
             client.offPutting.scale(0);
             client.offPuttingVel.scale(0).sub(client.position.subbed(serPlr.position));
             client.offPuttingVel.normalize();
             client.position.take(serPlr.position);
             continue;
         }
-        players.push(new PlayerClient(serPlr.name, serPlr.id, false));
+        players.push(new PlayerClient(serPlr, false));
     }
     for (let cliPlr of players) {
         if (!serPlrMap[cliPlr.id]) {
@@ -94,13 +97,40 @@ function inspectEnemies(serEnemies) {
             client.offPuttingVel.scale(0).sub(client.position.subbed(serEnemy.position));
             client.offPuttingVel.normalize();
             client.position.take(serEnemy.position);
+            client.flip = serEnemy.flip;
+            client.stack = serEnemy.stack;
             continue;
         }
-        enemies.push(new EnemyClient(serEnemy.id));
+        let newEnemy = new EnemyClient(serEnemy.id);
+        newEnemy.position.take(serEnemy.position);
+        enemies.push(newEnemy);
     }
     for (let cliEnemy of enemies) {
         if (!serEnemyMap[cliEnemy.id]) {
             cliEnemy.remove();
+        }
+    }
+}
+
+function inspectRects(serRects) {
+    let cliRectMap = {};
+    let serRectMap = {};
+    for (let cliRect of rects)
+        cliRectMap[cliRect.id] = cliRect;
+
+    for (let serRect of serRects) {
+        serRectMap[serRect.id] = serRect;
+        if (cliRectMap[serRect.id]) {
+            
+            continue;
+        }
+        let newRect = new Rect(serRect);
+        newRect.position.take(serRect.position);
+        rects.push(newRect);
+    }
+    for (let cliRect of rects) {
+        if (!serRectMap[cliRect.id]) {
+            cliRect.remove();
         }
     }
 }
@@ -110,8 +140,13 @@ window.onbeforeunload = async _ => {
 }
 
 let background = new Background()
-let main = new PlayerClient(Server.USERNAME, -1, true);
+let main = new PlayerClient({
+    name: Server.USERNAME,
+    id: -1,
+}, true);
 let camera = new Camera(main);
 let players = [main];
 let enemies = [];
+let rects = [];
+SThingHandler.tagMap["rects"] = rects;
 let chatbox = new ChatBox();
