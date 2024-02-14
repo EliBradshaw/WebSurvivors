@@ -1,7 +1,4 @@
-import ChatHandler from "../ChatHandler.js";
-import EnemyHandler from "../EnemyHandler.js";
 import HandlerHandler from "../HandlerHandler.js";
-import PlayerHandler from "../PlayerHandler.js";
 import Caller from "./Caller.js";
 
 export default class ProQuo extends Caller {
@@ -19,7 +16,6 @@ export default class ProQuo extends Caller {
         return {
             messages: ch.messages,
             players: ph.players,
-            enemies: eh.enemies,
             rects: coh.rects,
         };
     }

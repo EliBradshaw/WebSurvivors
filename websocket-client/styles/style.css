@@ -23,6 +23,7 @@ body {
 
 .rect {
     background-color: red;
+    z-index: -1;
 }
 
 .player > div {

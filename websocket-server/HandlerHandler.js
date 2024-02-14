@@ -1,7 +1,6 @@
 import API from "./API.js";
 import ChatHandler from "./ChatHandler.js";
 import CollisionHandler from "./CollisionHandler.js";
-import EnemyHandler from "./EnemyHandler.js";
 import Handler from "./Handler.js";
 import PlayerHandler from "./PlayerHandler.js";
 
@@ -9,7 +8,6 @@ import PlayerHandler from "./PlayerHandler.js";
 
 export default class HandlerHandler { // Yes. I named this.
     static registeredHandlers() {
-        Handler.registerHandler(new EnemyHandler());
         Handler.registerHandler(new API());
         Handler.registerHandler(new PlayerHandler());
         Handler.registerHandler(new ChatHandler());

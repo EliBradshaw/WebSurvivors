@@ -1,6 +1,7 @@
 import Handler from "./Handler.js";
 import Caller from "./apiCalls/Caller.js";
 import ChatMessage from "./apiCalls/ChatMessage.js";
+import Kick from "./apiCalls/Kick.js";
 import PlayerJoin from "./apiCalls/PlayerJoin.js";
 import PlayerLeave from "./apiCalls/PlayerLeave.js";
 import ProQuo from "./apiCalls/ProQuo.js";
@@ -16,7 +17,8 @@ export default class API extends Handler {
         Caller.registerCall(new ChatMessage());
         Caller.registerCall(new ProQuo());
         Caller.registerCall(new PlayerJoin());
-        Caller.registerCall(new PlayerLeave())
+        Caller.registerCall(new PlayerLeave());
+        Caller.registerCall(new Kick())
     }
     encodeArgs(args) {
         return args.map(JSON.stringify).map(str => btoa(str));

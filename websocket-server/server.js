@@ -42,7 +42,14 @@ HandlerHandler.get("collision").addRect(
 		new Vector(250, 600),
 		new Vector(500, 50),
 	)
-)
+);
+
+HandlerHandler.get("collision").addRect(
+	new CollisionRect(
+		new Vector(400, 450),
+		new Vector(300, 25),
+	)
+);
 
 function gameLoop() {
 	let before = performance.now();

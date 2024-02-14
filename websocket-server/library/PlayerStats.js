@@ -3,7 +3,7 @@ export default class PlayerStats {
         BASE_SPEED: 3,
         SPEED_PERC_UP: 0,
 
-        BASE_JUMP: 5,
+        BASE_JUMP: 7,
         JUMP_PERC_UP: 0,
 
         BASE_ATK_SPEED: 1,

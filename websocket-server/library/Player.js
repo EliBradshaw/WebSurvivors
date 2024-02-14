@@ -4,7 +4,7 @@ import Vector from "./Vector.js";
 
 export default class Player {
     constructor(name, id = Math.random()) {
-        this.name = name;
+        this.name = name+"";
         this.position = new Vector(); // DO NOT SET THE POSITION ANYWHERE.
         // The proper thing to do is this.position.take(otherVector)
         this.size = new Vector(20, 60);
@@ -14,6 +14,7 @@ export default class Player {
         ); // because we are passing by reference, this should dynamically update.
         this.id = id;
         this.abilities = [];
+        this.wasKicked = false;
         this.stats = new PlayerStats();
     }
 }

@@ -10,6 +10,9 @@ export default class ChatBox extends SThing {
         this.messages.classList.add("chatbox-messages");
         this.input = document.createElement("input");
         this.input.onchange = _ => {
+            if (this.commandChecker(this.input.value)) {
+                return this.input.value = "";
+            }
             let message = `<${Server.USERNAME}> ${this.input.value}\n`;
             this.input.value = "";
             Server.call("chatMessage", message).then(msgs => {
@@ -19,6 +22,17 @@ export default class ChatBox extends SThing {
         this.html.appendChild(this.ping);
         this.html.appendChild(this.messages);
         this.html.appendChild(this.input);
+    }
+
+    commandChecker(text) {
+        if (text[0] != "/")
+            return false;
+        let [command, ...args] = text.split(" ");
+        switch (command) {
+            case "/kick":
+                Server.call("kick", args[0]);
+                return true;
+        }
     }
 
     camCoords() {
