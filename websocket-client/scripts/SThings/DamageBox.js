@@ -1,12 +1,12 @@
-import SThingHandler from "./SThingHandler.js";
-import SThing from "./SThing.js";
-import Vector from "./Vector.js";
+import SThingHandler from "../library/SThingHandler.js";
+import SThing from "../library/SThing.js";
+import Vector from "../library/Vector.js";
 
-export default class Box extends SThing {
+export default class DamageBox extends SThing {
     constructor(ser) {
         super("box");
         this.id = ser.id;
-        this.html.id = `box-${this.id}`;
+        this.html.id = `damage-box-${this.id}`;
         
         this.html.style.position = "absolute";
         this.box = new Vector(ser.box.x, ser.box.y);

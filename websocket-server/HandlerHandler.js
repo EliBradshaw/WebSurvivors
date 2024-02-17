@@ -1,6 +1,7 @@
 import API from "./handlers/API.js";
 import ChatHandler from "./handlers/ChatHandler.js";
 import CollisionHandler from "./handlers/CollisionHandler.js";
+import DamageBoxHandler from "./handlers/DamageBoxHandler.js";
 import Handler from "./handlers/Handler.js";
 import PlayerHandler from "./handlers/PlayerHandler.js";
 
@@ -12,6 +13,7 @@ export default class HandlerHandler { // Yes. I named this.
         Handler.registerHandler(new PlayerHandler());
         Handler.registerHandler(new ChatHandler());
         Handler.registerHandler(new CollisionHandler());
+        Handler.registerHandler(new DamageBoxHandler());
     }
     
     /** @type {function(...string): Handler|Handler[]} */

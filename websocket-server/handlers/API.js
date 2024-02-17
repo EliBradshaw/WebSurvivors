@@ -6,6 +6,7 @@ import PlayerJoin from "../apiCalls/PlayerJoin.js";
 import PlayerLeave from "../apiCalls/PlayerLeave.js";
 import ProQuo from "../apiCalls/ProQuo.js";
 import Fuzz from "../apiCalls/fuzz.js";
+import Damage from "../apiCalls/Damage.js";
 
 export default class API extends Handler {
     constructor() {
@@ -18,7 +19,8 @@ export default class API extends Handler {
         Caller.registerCall(new ProQuo());
         Caller.registerCall(new PlayerJoin());
         Caller.registerCall(new PlayerLeave());
-        Caller.registerCall(new Kick())
+        Caller.registerCall(new Kick());
+        Caller.registerCall(new Damage());
     }
     encodeArgs(args) {
         return args.map(JSON.stringify).map(str => btoa(str));

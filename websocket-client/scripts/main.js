@@ -3,8 +3,9 @@ import ChatBox from "./SThings/ChatBox.js";
 import PlayerClient from "./SThings/PlayerClient.js";
 import SThingHandler from "./library/SThingHandler.js";
 import Server from "./Server.js";
-import Box from "./library/Box.js";
+import Box from "./SThings/Box.js";
 import Synchronizer from "./Synchronizer.js";
+import DamageBox from "./SThings/DamageBox.js";
 
 function getCookieOrSet(name, setter) {
     let value = localStorage.getItem(name);
@@ -37,10 +38,23 @@ Synchronizer.addSyncItem(
         newBox.position.take(server.position);
         return newBox;
     },
-    (client, server) => {
+    _ => {
         // Don't need anything
     }
-)
+);
+
+Synchronizer.addSyncItem(
+    "damageBoxes",
+    server => {
+        let newBox = new DamageBox(server);
+        newBox.position.take(server.position);
+        return newBox;
+    },
+    (client, server) => {
+
+        client.position.take(server.position);
+    }
+);
 
 function serverUpdateLoop() {
     let before = performance.now();

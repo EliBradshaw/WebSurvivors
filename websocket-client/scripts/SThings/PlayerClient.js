@@ -3,6 +3,7 @@ import SThing from "../library/SThing.js";
 import Utils from "../library/Utils.js";
 import Vector from "../library/Vector.js";
 import Synchronizer from "../Synchronizer.js";
+import Server from "../Server.js";
 
 export default class PlayerClient extends SThing {
     constructor(serPlr, isMain = false) {
@@ -74,6 +75,11 @@ export default class PlayerClient extends SThing {
             this.colFlags.scale(0);
     }
 
+    spawnDamageBox() {
+        if (heldKeys["h"])
+            Server.call("damage", this.id);
+    }
+
     checkCols() {
         for (let box of Synchronizer.get("boxes")) {
             let collided = box.isColliding({
@@ -119,6 +125,7 @@ export default class PlayerClient extends SThing {
     main() {
         this.mainMovement();
         this.mainJumpCheck();
+        this.spawnDamageBox();
         this.velocity.y += 0.1; // Apply Gravity
 
         this.mainCheckVelForCol();

@@ -8,7 +8,7 @@ export default class ProQuo extends Caller {
 
     onCall(data) {
         let client = data[0];
-        const [ch, ph, coh] = HandlerHandler.get("chat", "player", "collision");
+        const [ch, ph, coh, db] = HandlerHandler.get("chat", "player", "collision", "damageBox");
         if (client) {
             let serv = ph.getPlayer(client.id);
             serv.position.take(client.position);
@@ -17,6 +17,7 @@ export default class ProQuo extends Caller {
             messages: ch.messages,
             players: ph.players,
             boxes: coh.boxes,
+            damageBoxes: db.boxes,
         };
     }
 }

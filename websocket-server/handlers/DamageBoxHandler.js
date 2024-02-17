@@ -1,34 +1,34 @@
+import { DamageBox } from "../library/DamageBox.js";
 import Handler from "./Handler.js";
-import CollisionRect from "../library/CollisionBox.js";
 
-export default class CollisionHandler extends Handler {
+export default class DamageBoxHandler extends Handler {
     constructor() {
-        super("collision");
-        /** @type {CollisionRect[]} */
-        this.rects = [];
-        /** @type {Map<number, CollisionRect>} */
-        this.rectMap = {};
+        super("damageBox");
+        /** @type {DamageBox[]} */
+        this.boxes = [];
+        /** @type {Map<number, DamageBox>} */
+        this.boxMap = {};
     }
-    /** @type {function(CollisionRect)} */
-    addRect(rect) {
-        this.rects.push(rect);
-        this.rectMap[rect.id] = rect;
+    /** @type {function(DamageBox)} */
+    addBox(box) {
+        this.boxes.push(box);
+        this.boxMap[box.id] = box;
     }
-    /** @type {function(number): CollisionRect} */
-    getRect(id) {
-        return this.rectMap[id];
+    /** @type {function(number): CollisionBox} */
+    getBox(id) {
+        return this.boxMap[id];
     }
-    /** @type {function(number): CollisionRect} */
-    removeRect(id) {
-        let rrect = null;
-        let unremrects = [];
-        for (let rect of this.rects) {
-            if (rect.id != id) 
-                unremrects.push(rect);
+    /** @type {function(number): CollisionBox} */
+    removeBox(id) {
+        let rbox = null;
+        let unremboxes = [];
+        for (let box of this.boxes) {
+            if (box.id != id) 
+                unremboxes.push(box);
             else
-                rrect = rect;
+                rbox = box;
         }
-        this.rects = unremrects;
-        return rrect;
+        this.boxes = unremboxes;
+        return rbox;
     }
 }
