@@ -1,4 +1,4 @@
-import SyncItem from "./SyncItem";
+import SyncItem from "./SyncItem.js";
 
 export default class Synchronizer {
     static syncItems = [];
@@ -12,6 +12,8 @@ export default class Synchronizer {
     static sync(serInfo) {
         for (let name in serInfo) {
             let sitem = Synchronizer.syncMap[name];
+            if (!sitem)
+                continue;
             sitem.consider(serInfo[name]);
         }
     }

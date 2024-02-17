@@ -1,6 +1,6 @@
 import Camera from "./SThings/Camera.js";
-import ChatBox from "./ChatBox.js";
-import PlayerClient from "./PlayerClient.js";
+import ChatBox from "./SThings/ChatBox.js";
+import PlayerClient from "./SThings/PlayerClient.js";
 import SThingHandler from "./library/SThingHandler.js";
 import Server from "./Server.js";
 import Box from "./library/Box.js";
@@ -17,7 +17,7 @@ function getCookieOrSet(name, setter) {
 
 Synchronizer.addSyncItem(
     "players",
-    server => new PlayerClient(server, server.id == Server.ID),
+    server => server.id == Server.ID ? main : new PlayerClient(server, server.id == Server.ID),
     (client, server) => {
         client.dimensions.take(server.size);
         client.serPlr = server;
@@ -34,7 +34,7 @@ Synchronizer.addSyncItem(
     "boxes",
     server => {
         let newBox = new Box(server);
-        newBox.position.take(serBox.position);
+        newBox.position.take(server.position);
         return newBox;
     },
     (client, server) => {
@@ -86,7 +86,6 @@ let main = new PlayerClient({
     name: Server.USERNAME,
     id: -1,
 }, true);
-Synchronizer.get("players").data.push(main);
 let camera = new Camera(main);
 let boxes = [];
 SThingHandler.tagMap["boxes"] = boxes;
