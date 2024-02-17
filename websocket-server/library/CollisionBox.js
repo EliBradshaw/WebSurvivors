@@ -1,7 +1,7 @@
-export default class CollisionRect {
-    constructor(position, rect , id = Math.random()) {
+export default class CollisionBox {
+    constructor(position, box , id = Math.random()) {
         this.position = position;
-        this.rect = rect;
+        this.box = box;
         this.id = id;
     }
 
@@ -9,8 +9,8 @@ export default class CollisionRect {
         let [pos, pos2, rec, rec2] = [
             this.position,
             col2.position,
-            this.rect,
-            col2.rect,
+            this.box,
+            col2.box,
         ]
         let xcol = pos.x + rec.x > pos2.x &&
                    pos2.x + rec2.x > pos.x;

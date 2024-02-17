@@ -1,18 +1,17 @@
 import SThingHandler from "./SThingHandler.js";
-import SThing from "./Sthing.js";
+import SThing from "./SThing.js";
 import Vector from "./Vector.js";
 
-export default class Rect extends SThing {
+export default class Box extends SThing {
     constructor(ser) {
-        super("rect");
-        console.log(ser);
+        super("box");
         this.id = ser.id;
-        this.html.id = `rect-${this.id}`;
+        this.html.id = `box-${this.id}`;
         
         this.html.style.position = "absolute";
-        this.rect = new Vector(ser.rect.x, ser.rect.y);
-        this.html.style.width = ser.rect.x + 'px';
-        this.html.style.height = ser.rect.y + 'px';
+        this.box = new Vector(ser.box.x, ser.box.y);
+        this.html.style.width = ser.box.x + 'px';
+        this.html.style.height = ser.box.y + 'px';
     }
 
     tick() {
@@ -31,8 +30,8 @@ export default class Rect extends SThing {
         let [pos, pos2, rec, rec2] = [
             this.position,
             col2.position,
-            this.rect,
-            col2.rect,
+            this.box,
+            col2.box,
         ]
         let xcol = pos.x + rec.x > pos2.x &&
                    pos2.x + rec2.x > pos.x;

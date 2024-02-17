@@ -1,6 +1,6 @@
 import Player from "../library/Player.js";
-import ChatHandler from "../ChatHandler.js";
-import PlayerHandler from "../PlayerHandler.js";
+import ChatHandler from "../handlers/ChatHandler.js";
+import PlayerHandler from "../handlers/PlayerHandler.js";
 import Caller from "./Caller.js";
 import HandlerHandler from "../HandlerHandler.js";
 

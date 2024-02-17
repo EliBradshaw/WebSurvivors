@@ -1,6 +1,6 @@
 import Server from "./Server.js";
-import SThing from "./Sthing.js";
-import Vector from "./Vector.js";
+import SThing from "./library/SThing.js";
+import Vector from "./library/Vector.js";
 
 export default class ChatBox extends SThing {
     constructor() {

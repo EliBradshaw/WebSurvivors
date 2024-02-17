@@ -21,7 +21,7 @@ body {
     background-size: 100%;
 }
 
-.rect {
+.box {
     background-color: red;
     z-index: -1;
 }

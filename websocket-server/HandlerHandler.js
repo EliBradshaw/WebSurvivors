@@ -1,8 +1,8 @@
-import API from "./API.js";
-import ChatHandler from "./ChatHandler.js";
-import CollisionHandler from "./CollisionHandler.js";
-import Handler from "./Handler.js";
-import PlayerHandler from "./PlayerHandler.js";
+import API from "./handlers/API.js";
+import ChatHandler from "./handlers/ChatHandler.js";
+import CollisionHandler from "./handlers/CollisionHandler.js";
+import Handler from "./handlers/Handler.js";
+import PlayerHandler from "./handlers/PlayerHandler.js";
 
 // THE HAND HAND ITSELF!
 

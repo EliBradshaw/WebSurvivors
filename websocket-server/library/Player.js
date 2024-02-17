@@ -1,4 +1,4 @@
-import CollisionRect from "./CollisionRect.js";
+import CollisionRect from "./CollisionBox.js";
 import PlayerStats from "./PlayerStats.js";
 import Vector from "./Vector.js";
 

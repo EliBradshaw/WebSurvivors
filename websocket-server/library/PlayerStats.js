@@ -1,6 +1,6 @@
 export default class PlayerStats {
     static DEFAULTS = {
-        BASE_SPEED: 3,
+        BASE_SPEED: 5,
         SPEED_PERC_UP: 0,
 
         BASE_JUMP: 7,

@@ -2,7 +2,7 @@ import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import HandlerHandler from './HandlerHandler.js';
-import CollisionRect from './library/CollisionRect.js';
+import CollisionBox from './library/CollisionBox.js';
 import Vector from './library/Vector.js';
 
 const PORT = process.env.PORT || 8080;
@@ -37,17 +37,17 @@ const TARGET_MS = 1000 / TARGET_FPS;
 let timing = TARGET_MS;
 let fade = 0.1;
 
-HandlerHandler.get("collision").addRect(
-	new CollisionRect(
+HandlerHandler.get("collision").addBox(
+	new CollisionBox(
 		new Vector(250, 600),
-		new Vector(500, 50),
+		new Vector(800, 50),
 	)
 );
 
-HandlerHandler.get("collision").addRect(
-	new CollisionRect(
-		new Vector(400, 450),
-		new Vector(300, 25),
+HandlerHandler.get("collision").addBox(
+	new CollisionBox(
+		new Vector(300, 450),
+		new Vector(400, 25),
 	)
 );
 

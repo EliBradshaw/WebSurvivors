@@ -1,7 +1,7 @@
 import Handler from "./Handler.js";
-import HandlerHandler from "./HandlerHandler.js";
-import Player from "./library/Player.js";
-import Vector from "./library/Vector.js";
+import HandlerHandler from "../HandlerHandler.js";
+import Player from "../library/Player.js";
+import Vector from "../library/Vector.js";
 
 export default class PlayerHandler extends Handler {
     constructor() {

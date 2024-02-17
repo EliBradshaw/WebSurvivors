@@ -1,11 +1,11 @@
 import Handler from "./Handler.js";
-import Caller from "./apiCalls/Caller.js";
-import ChatMessage from "./apiCalls/ChatMessage.js";
-import Kick from "./apiCalls/Kick.js";
-import PlayerJoin from "./apiCalls/PlayerJoin.js";
-import PlayerLeave from "./apiCalls/PlayerLeave.js";
-import ProQuo from "./apiCalls/ProQuo.js";
-import Fuzz from "./apiCalls/fuzz.js";
+import Caller from "../apiCalls/Caller.js";
+import ChatMessage from "../apiCalls/ChatMessage.js";
+import Kick from "../apiCalls/Kick.js";
+import PlayerJoin from "../apiCalls/PlayerJoin.js";
+import PlayerLeave from "../apiCalls/PlayerLeave.js";
+import ProQuo from "../apiCalls/ProQuo.js";
+import Fuzz from "../apiCalls/fuzz.js";
 
 export default class API extends Handler {
     constructor() {

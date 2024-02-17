@@ -1,5 +1,5 @@
 import Handler from "./Handler.js";
-import CollisionRect from "./library/CollisionRect.js";
+import CollisionRect from "../library/CollisionBox.js";
 
 export default class CollisionHandler extends Handler {
     constructor() {

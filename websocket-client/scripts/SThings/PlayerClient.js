@@ -1,7 +1,8 @@
-import SThingHandler from "./SThingHandler.js";
-import SThing from "./Sthing.js";
-import Utils from "./Utils.js";
-import Vector from "./Vector.js";
+import SThingHandler from "../library/SThingHandler.js";
+import SThing from "../library/SThing.js";
+import Utils from "../library/Utils.js";
+import Vector from "../library/Vector.js";
+import Synchronizer from "../Synchronizer.js";
 
 export default class PlayerClient extends SThing {
     constructor(serPlr, isMain = false) {
@@ -26,12 +27,16 @@ export default class PlayerClient extends SThing {
     mainMovement() {
         this.velocity.x = 0;
         if (heldKeys["d"]) {
-            this.movementBias += this.movementBias < 0 ? 0.1 : 0.05;
-            this.faceRight = true;
+            if (!heldKeys["a"] || this.faceRight) {  
+                this.movementBias += this.movementBias < 0 ? 0.1 : 0.05;
+                this.faceRight = true;
+            }
         }
         else if (heldKeys["a"]) {
-            this.movementBias -= this.movementBias > 0 ? 0.1 : 0.05;
-            this.faceRight = false;
+            if (!heldKeys["d"] || !this.faceRight) {  
+                this.movementBias -= this.movementBias > 0 ? 0.1 : 0.05;
+                this.faceRight = false;
+            }
         }
         else {
             this.movementBias *= 0.9;
@@ -70,10 +75,10 @@ export default class PlayerClient extends SThing {
     }
 
     checkCols() {
-        for (let rect of SThingHandler.get("rects")) {
-            let collided = rect.isColliding({
+        for (let box of Synchronizer.get("boxes")) {
+            let collided = box.isColliding({
                 position: this.position,
-                rect: this.dimensions
+                box: this.dimensions
             });
             if (collided) {
                 this.position.sub(this.velocity);
