@@ -39,8 +39,8 @@ let fade = 0.1;
 
 HandlerHandler.get("collision").addBox(
 	new CollisionBox(
-		new Vector(0, 600),
-		new Vector(1250, 50),
+		new Vector(-100, 600),
+		new Vector(2150, 50),
 	)
 );
 

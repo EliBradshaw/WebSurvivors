@@ -70,13 +70,13 @@ export default class PlayerClient extends SThing {
                 if (this.movementBias > 0)
                     this.boost = 0;
                 if (!this.wasCon)
-                    this.boost += 1;
+                    this.boost += 1.5;
                 this.wasCon = true;
             }
         }
         else {
             this.movementBias *= 0.9;
-            this.boost *= 0.9;
+            this.boost *= 0.95;
             this.wasCon = false;
         }
         this.movementBias = Utils.clamp(this.movementBias, -1, 1);
@@ -90,7 +90,7 @@ export default class PlayerClient extends SThing {
             this.holJum = true;
         }
         else if (heldKeys[" "] && !this.holJum) {
-            this.velocity.y *= 1.1;
+            this.velocity.y -= 0.45;
             this.holJum = true;
         }
         else {
@@ -125,13 +125,24 @@ export default class PlayerClient extends SThing {
 
     /// SHOOT
     spawnDamageBox() {
-        if (heldKeys["leftMouse"] && this.cooldown-- <= 0) {
+        this.cooldown--;
+        if (heldKeys["leftMouse"] && this.cooldown <= 0) {
             this.cooldown = 10;
             let center = new Vector(window.innerWidth/2, window.innerHeight/2);
             let dir = mousePos.subbed(center);
             dir.normalize();
             dir.add(this.velocity.scaled(1/20));
-            Server.call("damage", [this.id, dir, this.faceRight]);
+            Server.call("damage", [this.id, dir, 5]);
+        }
+
+        if (heldKeys["rightMouse"] && this.cooldown < 10) {
+            this.cooldown = 100;
+            let center = new Vector(window.innerWidth/2, window.innerHeight/2);
+            let dir = mousePos.subbed(center);
+            dir.normalize();
+            dir.add(this.velocity.scaled(1/20));
+            Server.call("damage", [this.id, dir, 50]);
+            heldKeys["rightMouse"] = false;
         }
     }
 

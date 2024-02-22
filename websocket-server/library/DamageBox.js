@@ -10,27 +10,24 @@ export class DamageBox {
         this.lifetime = lifetime;
         this.velocity = new Vector();
         this.id = id;
+        this.lastHit = null;
         this.colFlags = new Vector();
     }
 
     
     checkVelForCol(against) {
-        let didCol = false;
+        this.colFlags.scale(0);
         let cpy = this.position.scaled(1);
         this.position.x += this.velocity.x;
         if (this.checkCols(against)) {
-            didCol = true;
             this.colFlags.x = this.velocity.x > 0 ? 1 : -1;
             this.position.x -= this.velocity.x;
         }
         this.position.y += this.velocity.y
         if (this.checkCols(against)) {
-            didCol = true;
             this.colFlags.y = this.velocity.y > 0 ? 1 : -1;
         }
         this.position.take(cpy);
-        if (!didCol)
-            this.colFlags.scale(0);
     }
 
     checkCols(against = "collision") {
@@ -50,6 +47,7 @@ export class DamageBox {
             let collided = this.isColliding(box);
             if (collided) {
                 this.position.sub(this.velocity);
+                this.lastHit = box2;
                 return box2;
             }
         }

@@ -1,6 +1,7 @@
 import SThingHandler from "../library/SThingHandler.js";
 import SThing from "../library/SThing.js";
 import Vector from "../library/Vector.js";
+import Server from "../Server.js";
 
 export default class DamageBox extends SThing {
     constructor(ser) {
@@ -11,6 +12,8 @@ export default class DamageBox extends SThing {
         
         this.html.style.position = "absolute";
         this.box = new Vector(ser.box.x, ser.box.y);
+        if (ser.owner.id == Server.ID)
+            this.html.style.backgroundColor = "green";
         this.html.style.width = ser.box.x + 'px';
         this.html.style.height = ser.box.y + 'px';
     }
