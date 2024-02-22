@@ -6,6 +6,9 @@ import Server from "./Server.js";
 import Box from "./SThings/Box.js";
 import Synchronizer from "./Synchronizer.js";
 import DamageBox from "./SThings/DamageBox.js";
+import Vector from "./library/Vector.js";
+
+mousePos = new Vector();
 
 function getCookieOrSet(name, setter) {
     let value = localStorage.getItem(name);
@@ -24,9 +27,11 @@ Synchronizer.addSyncItem(
         client.serPlr = server;
         if (server.id == Server.ID || server.isMain)
             return;
+        client.faceRight = client.position.subbed(server.position).x <= 0;
+        console.log(client.position.subbed(server.position).x);
         client.offPutting.scale(0);
         client.offPuttingVel.scale(0).sub(client.position.subbed(server.position));
-        client.offPuttingVel.normalize().scale(ping/TARGET_MS);
+        client.offPuttingVel.normalize();
         client.position.take(server.position);
     }
 );
@@ -51,7 +56,7 @@ Synchronizer.addSyncItem(
         return newBox;
     },
     (client, server) => {
-
+        client.ser = server;
         client.position.take(server.position);
     }
 );
@@ -63,7 +68,9 @@ function serverUpdateLoop() {
         let after = performance.now();
         let ping = Math.round(after - before);
         chatbox.ping.innerText = `Ping: ${ping}`;
-        chatbox.messages.innerText = `${res.messages?.split("\\n").join("\n")}`;
+        let nmsg = `${res.messages?.split("\\n").join("\n")}`
+        if (chatbox.messages.innerText+"" != nmsg)
+            chatbox.messages.innerText = nmsg;
         Synchronizer.sync(res);
         serverUpdateLoop();
     });

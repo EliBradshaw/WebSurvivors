@@ -16,7 +16,9 @@ export default class ChatBox extends SThing {
             let message = `<${Server.USERNAME}> ${this.input.value}\n`;
             this.input.value = "";
             Server.call("chatMessage", message).then(msgs => {
-                this.messages.innerText = msgs.split("\\n").join("\n");
+                let nmsg = msgs.split("\\n").join("\n");
+                if (this.messages.innerText+"" != nmsg)
+                    this.messages.innerText = nmsg;
             });
         };
         this.html.appendChild(this.ping);

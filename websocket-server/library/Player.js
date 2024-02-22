@@ -15,6 +15,7 @@ export default class Player {
         this.id = id;
         this.abilities = [];
         this.wasKicked = false;
+        this.health = 100;
         this.stats = new PlayerStats();
     }
 }

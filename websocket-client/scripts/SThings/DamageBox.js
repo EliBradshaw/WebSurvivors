@@ -5,6 +5,7 @@ import Vector from "../library/Vector.js";
 export default class DamageBox extends SThing {
     constructor(ser) {
         super("box");
+        this.ser = ser;
         this.id = ser.id;
         this.html.id = `damage-box-${this.id}`;
         
@@ -15,7 +16,11 @@ export default class DamageBox extends SThing {
     }
 
     tick() {
-        
+        let angle = Math.atan2(this.ser.velocity.y, this.ser.velocity.x) * 180 / Math.PI;
+
+        this.html.style.transform = `
+            rotate(${angle}deg)
+        `;
     }
 
     camCoords() {

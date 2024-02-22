@@ -8,12 +8,27 @@ export default class Damage extends Caller {
         super("damage");
     }
 
-    onCall(playerId) {
-        console.log(playerId);
+    onCall([[playerId, dir, wasRight]]) {
         let db = HandlerHandler.get("damageBox");
         let player = HandlerHandler.get("player").getPlayer(playerId);
-        let dmgBox = new DamageBox(player.position.scaled(1), new Vector(20, 20));
-        console.log(dmgBox);
+        dir = new Vector(dir.x, dir.y);
+        let spawn = player.position.scaled(1);
+        spawn.y += player.size.y / 2;
+        spawn.add(dir.scaled(50));
+        let dmgBox = new DamageBox(spawn, new Vector(20, 5), player, box => {
+            box.checkVelForCol();
+            if (box.colFlags.y != 0)
+                box.velocity.y *= -1;
+            if (box.colFlags.x != 0)
+                box.velocity.x *= -1;
+
+            box.checkVelForCol("damageBox");
+            if (box.colFlags.y != 0)
+                box.velocity.y *= -1;
+            if (box.colFlags.x != 0)
+                box.velocity.x *= -1;
+        }, 100);
+        dmgBox.velocity.take(dir.scaled(10));
         db.addBox(dmgBox);
     }
 }

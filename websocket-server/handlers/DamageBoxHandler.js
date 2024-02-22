@@ -31,4 +31,28 @@ export default class DamageBoxHandler extends Handler {
         this.boxes = unremboxes;
         return rbox;
     }
+
+    tick() {
+        for (let i = 0; i < this.boxes.length; i++) {
+            let box = this.boxes[i];
+            box.position.add(box.velocity);
+            box.tickFun(box);
+            box.lifetime--;
+            if (box.lifetime == 0)
+                this.removeBox(box.id);
+
+            let plr = box.checkCols("player");
+            if (plr) {
+                if (plr == box.owner) {
+                    plr.health +=  box.velocity.length()/5;
+                    if (plr.health > 100)
+                        plr.health = 100;
+                }
+                else {
+                    plr.health -= box.velocity.length();
+                }
+                this.removeBox(box.id);
+            }
+        }
+    }
 }

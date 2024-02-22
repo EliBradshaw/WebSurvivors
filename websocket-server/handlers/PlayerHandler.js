@@ -33,4 +33,11 @@ export default class PlayerHandler extends Handler {
         this.players = unremPlayers;
         return rplayer;
     }
+
+    tick() {
+        for (let plr of this.players) {
+            if (plr.health <= 0)
+                this.removePlayer(plr.id);
+        }
+    }
 }
